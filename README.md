@@ -5,6 +5,7 @@ The project contains:
   - AssemblyCarEntity
   - Car
   - Stations
+  - Exception
   
 I have added the following classes:
   - Specs - I am storing Car specifications before to be created
@@ -20,6 +21,7 @@ Stations:
     
  Station - an abstract class that is extend by all the stations
  Chain - return next station.
+ NoSpecsException - throwing when we don't receive specs
 
 Execution:
   - No java main.
