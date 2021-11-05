@@ -7,9 +7,9 @@ The project contains:
   Stations
   
 I have added the following classes:
-  Specs - I am storing Car specifications before to be created
-  InteriorParts - Interior details
-  MechanicParts - Mechanic details
+  *Specs - I am storing Car specifications before to be created
+  *InteriorParts - Interior details
+  *MechanicParts - Mechanic details
   
   Stations:
     PaintStation
