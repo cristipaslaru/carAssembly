@@ -19,9 +19,11 @@ Stations:
   - PolishStation
   - QaStation
     
- Station - an abstract class that is extend by all the stations
- Chain - return next station.
- NoSpecsException - throwing when we don't receive specs
+Station - an abstract class that is extend by all the stations.
+
+Chain - return next station.
+
+NoSpecsException - throwing when we don't receive specs.
 
 Execution:
   - No java main.
