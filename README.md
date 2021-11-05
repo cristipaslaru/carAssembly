@@ -20,3 +20,7 @@ Stations:
     
  Station - an abstract class that is extend by all the stations
  Chain - return next station.
+
+Execution:
+  - No java main.
+  - you can execute the unit tests. (AssemblyLineTest.java)
