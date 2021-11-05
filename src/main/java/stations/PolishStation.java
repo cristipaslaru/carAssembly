@@ -2,6 +2,7 @@ package stations;
 
 
 import car.AssemblyCarEntity;
+import exception.NoSpecsException;
 
 public class PolishStation extends Station{
 
@@ -18,7 +19,7 @@ public class PolishStation extends Station{
 
 
     @Override
-    public void apply(AssemblyCarEntity assemblyCarEntity) {
+    public void apply(AssemblyCarEntity assemblyCarEntity) throws NoSpecsException {
         assemblyCarEntity.polish();
         Chain.next(getInstance()).apply(assemblyCarEntity);
     }

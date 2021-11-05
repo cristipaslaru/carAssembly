@@ -1,6 +1,7 @@
 package stations;
 
 import car.AssemblyCarEntity;
+import exception.NoSpecsException;
 
 public class PaintStation extends Station{
 
@@ -16,7 +17,7 @@ public class PaintStation extends Station{
     }
 
     @Override
-    public void apply(AssemblyCarEntity assemblyCarEntity) {
+    public void apply(AssemblyCarEntity assemblyCarEntity) throws NoSpecsException {
         assemblyCarEntity.paint();
         Chain.next(getInstance()).apply(assemblyCarEntity);
     }

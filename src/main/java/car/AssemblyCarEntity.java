@@ -1,6 +1,8 @@
 package car;
 
 
+import exception.NoSpecsException;
+
 public class AssemblyCarEntity {
 
     private Car car = new Car();
@@ -10,22 +12,27 @@ public class AssemblyCarEntity {
         this.specs = specs;
     }
 
-    public void paint() {
+    public void paint() throws NoSpecsException {
+        if(specs.getColor()==null){
+            throw new NoSpecsException("Color not found");
+        }
         car.setColor(specs.getColor());
     }
 
-    public void assemblyMechanich() {
+    public void assemblyMechanic() throws NoSpecsException {
         MechanicParts mechanicParts = specs != null ? specs.getMechanicParts() : null;
-        if (mechanicParts != null) {
-            car.setMechanicParts(mechanicParts);
+        if (mechanicParts == null) {
+            throw new NoSpecsException("MechanicParts not found");
         }
+        car.setMechanicParts(mechanicParts);
     }
 
-    public void assemblyInterior() {
+    public void assemblyInterior() throws NoSpecsException {
         InteriorParts interiorParts = specs != null ? specs.getInteriorParts() : null;
-        if (interiorParts != null) {
-            car.setInteriorParts(interiorParts);
+        if (interiorParts == null) {
+            throw new NoSpecsException("InteriorParts not found");
         }
+        car.setInteriorParts(interiorParts);
     }
 
     public void polish() {

@@ -1,6 +1,7 @@
 package stations;
 
 import car.AssemblyCarEntity;
+import exception.NoSpecsException;
 
 public class AssemblyMechanicStation extends Station{
 
@@ -16,8 +17,8 @@ public class AssemblyMechanicStation extends Station{
     }
 
     @Override
-    public void apply(AssemblyCarEntity assemblyCarEntity){
-        assemblyCarEntity.assemblyMechanich();
+    public void apply(AssemblyCarEntity assemblyCarEntity) throws NoSpecsException {
+        assemblyCarEntity.assemblyMechanic();
         Chain.next(getInstance()).apply(assemblyCarEntity);
     }
 }

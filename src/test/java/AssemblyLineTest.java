@@ -1,12 +1,13 @@
 import assembly.AssemblyLine;
 import car.*;
+import exception.NoSpecsException;
 import org.junit.Assert;
 import org.junit.Test;
 
 public class AssemblyLineTest {
 
     @Test
-    public void testCar() {
+    public void testCar() throws NoSpecsException {
         MechanicParts mechanicParts = createMechanicParts(500, 150, "55kw");
         InteriorParts interiorParts = createInteriorParts(false, 10, "white");
         Car car = createCar("dark", mechanicParts, interiorParts, null);
@@ -16,7 +17,7 @@ public class AssemblyLineTest {
     }
 
     @Test()
-    public void testRecallStation() {
+    public void testRecallStation() throws NoSpecsException {
         MechanicParts mechanicParts = createMechanicParts(null, 150, "55kw");
         InteriorParts interiorParts = createInteriorParts(false, 10, "white");
         Car car = createCar("dark", mechanicParts, interiorParts, null);
@@ -29,49 +30,55 @@ public class AssemblyLineTest {
     }
 
     @Test()
-    public void testColor() {
-        Car car = createCar("dark", null, null, null);
+    public void testColor() throws NoSpecsException {
+        MechanicParts mechanicParts = createMechanicParts(null, 150, "55kw");
+        InteriorParts interiorParts = createInteriorParts(true, 10, "white");
+        Car car = createCar("dark", mechanicParts, interiorParts, null);
         Assert.assertFalse(car.getAccepted());
-        Assert.assertNull(car.getInteriorParts());
-        Assert.assertNull(car.getMechanicParts());
+        Assert.assertNotNull(car.getInteriorParts());
+        Assert.assertNotNull(car.getMechanicParts());
         Assert.assertEquals("dark", car.getColor());
     }
 
     @Test()
-    public void testMechanicParts() {
+    public void testMechanicParts() throws NoSpecsException {
         MechanicParts mechanicParts = createMechanicParts(600, 150, "55kw");
-        Car car = createCar("dark", mechanicParts, null, null);
+        InteriorParts interiorParts = createInteriorParts(null, 10, "white");
+        Car car = createCar("dark", mechanicParts, interiorParts, null);
         Assert.assertFalse(car.getAccepted());
         Assert.assertNotNull(car.getMechanicParts());
-        Assert.assertNull(car.getInteriorParts());
+        Assert.assertNotNull(car.getInteriorParts());
         Assert.assertEquals(600, (int) car.getMechanicParts().getAutonomy());
         Assert.assertEquals(150, (int) car.getMechanicParts().getHorsePower());
         Assert.assertEquals("55kw", car.getMechanicParts().getBattery());
     }
 
     @Test()
-    public void testInteriorParts() {
+    public void testInteriorParts() throws NoSpecsException {
+        MechanicParts mechanicParts = createMechanicParts(null, 450, "75kw");
         InteriorParts interiorParts = createInteriorParts(true, 10, "white");
-        Car car = createCar("dark", null, interiorParts, null);
+        Car car = createCar("dark", mechanicParts, interiorParts, null);
         Assert.assertFalse(car.getAccepted());
         Assert.assertNotNull(car.getInteriorParts());
-        Assert.assertNull(car.getMechanicParts());
+        Assert.assertNotNull(car.getMechanicParts());
         Assert.assertTrue(car.getInteriorParts().getLeather());
         Assert.assertEquals(10, (int) car.getInteriorParts().getDisplaySize());
         Assert.assertEquals("white", car.getInteriorParts().getInteriorColor());
     }
 
     @Test()
-    public void testPolish() {
-        Car car = createCar("dark", null, null, null);
+    public void testPolish() throws NoSpecsException {
+        MechanicParts mechanicParts = createMechanicParts(100, 450, "75kw");
+        InteriorParts interiorParts = createInteriorParts(true, null, "black");
+        Car car = createCar("dark", mechanicParts, interiorParts, null);
         Assert.assertFalse(car.getAccepted());
-        Assert.assertNull(car.getInteriorParts());
-        Assert.assertNull(car.getMechanicParts());
+        Assert.assertNotNull(car.getInteriorParts());
+        Assert.assertNotNull(car.getMechanicParts());
         Assert.assertTrue(car.getPolish());
     }
 
     @Test
-    public void testFullCar() {
+    public void testFullCar() throws NoSpecsException {
         MechanicParts mechanicParts = createMechanicParts(650, 450, "75kw");
         InteriorParts interiorParts = createInteriorParts(true, 17, "black");
         Car car = createCar("red", mechanicParts, interiorParts, null);
@@ -94,7 +101,26 @@ public class AssemblyLineTest {
         Assert.assertTrue(car.getAccepted());
     }
 
-    private Car createCar(String color, MechanicParts mechanicParts, InteriorParts interiorParts, Car car) {
+    @Test(expected = NoSpecsException.class)
+    public void noColorTest() throws NoSpecsException {
+        MechanicParts mechanicParts = createMechanicParts(650, 450, "75kw");
+        InteriorParts interiorParts = createInteriorParts(true, 17, "black");
+        Car car = createCar(null, mechanicParts, interiorParts, null);
+    }
+
+    @Test(expected = NoSpecsException.class)
+    public void noMechanicPartsTest() throws NoSpecsException {
+        InteriorParts interiorParts = createInteriorParts(true, 17, "black");
+        Car car = createCar("red", null, interiorParts, null);
+    }
+
+    @Test(expected = NoSpecsException.class)
+    public void noInteriorPartsTest() throws NoSpecsException {
+        MechanicParts mechanicParts = createMechanicParts(650, 450, "75kw");
+        Car car = createCar("red", mechanicParts, null, null);
+    }
+
+    private Car createCar(String color, MechanicParts mechanicParts, InteriorParts interiorParts, Car car) throws NoSpecsException {
         AssemblyLine assemblyLine = new AssemblyLine();
         AssemblyCarEntity assemblyCarEntity = new AssemblyCarEntity(new Specs(color, mechanicParts, interiorParts));
         if(car!=null){
@@ -111,7 +137,7 @@ public class AssemblyLineTest {
         return mechanicParts;
     }
 
-    private InteriorParts createInteriorParts(boolean hasLeather, Integer displaySize, String interiorColor) {
+    private InteriorParts createInteriorParts(Boolean hasLeather, Integer displaySize, String interiorColor) {
         InteriorParts interiorParts = new InteriorParts();
         interiorParts.setInteriorColor(interiorColor);
         interiorParts.setDisplaySize(displaySize);
