@@ -4,8 +4,8 @@ public class Chain {
 
     public static Station next(Station currentStation) {
         if (currentStation instanceof PaintStation) {
-            return AssemblyMechanichStation.getInstance();
-        } else if (currentStation instanceof AssemblyMechanichStation) {
+            return AssemblyMechanicStation.getInstance();
+        } else if (currentStation instanceof AssemblyMechanicStation) {
             return AssemblyInteriorStation.getInstance();
         } else if (currentStation instanceof AssemblyInteriorStation) {
             return PolishStation.getInstance();

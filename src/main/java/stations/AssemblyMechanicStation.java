@@ -2,15 +2,15 @@ package stations;
 
 import car.AssemblyCarEntity;
 
-public class AssemblyMechanichStation extends Station{
+public class AssemblyMechanicStation extends Station{
 
-    private static AssemblyMechanichStation assemblyMechanichStation;
+    private static AssemblyMechanicStation assemblyMechanichStation;
 
-    private AssemblyMechanichStation(){}
+    private AssemblyMechanicStation(){}
 
-    public static AssemblyMechanichStation getInstance(){
+    public static AssemblyMechanicStation getInstance(){
         if(assemblyMechanichStation==null){
-            assemblyMechanichStation = new AssemblyMechanichStation();
+            assemblyMechanichStation = new AssemblyMechanicStation();
         }
         return assemblyMechanichStation;
     }
